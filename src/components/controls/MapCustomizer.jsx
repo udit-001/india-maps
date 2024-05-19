@@ -17,7 +17,11 @@ function MapCustomizer({ updateFillColor, updateBorderWidth, updateOpacity, upda
     const containerRef = useRef()
 
     useEffect(() => {
-        
+        containerRef.current.classList.add("invisible")
+        containerRef.current.classList.add("-translate-x-full")
+        setTimeout(() => {
+            containerRef.current.classList.remove("invisible")
+        }, 400)
     }, [])
 
     useEffect(() => {
@@ -36,11 +40,7 @@ function MapCustomizer({ updateFillColor, updateBorderWidth, updateOpacity, upda
             containerRef.current.classList.remove("invisible")
         }
         if(active === false){
-            containerRef.current.classList.add("invisible")
             containerRef.current.classList.add("-translate-x-full")
-            setTimeout(() => {
-                containerRef.current.classList.remove("invisible")
-            }, 400)
         }
         setIsActive(active)
     }, [active])
