@@ -13,3 +13,4 @@ Currently, two official plugins are available:
 - [ ] Randomize button which creates random color for each feature in Map
 - [ ] Allow users to place markers
 - [ ] Add 404 handling for dynamic page
+- [ ] Add marker cluster group support for meetup page (using react-leaflet-markercluster)
