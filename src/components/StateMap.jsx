@@ -6,7 +6,7 @@ import 'leaflet-fullscreen/dist/Leaflet.fullscreen.js';
 import 'leaflet-fullscreen/dist/leaflet.fullscreen.css';
 import Loader from './Loader';
 import { Link, Outlet } from 'react-router-dom';
-// import FixedBound from './FixedBound';
+import FixedBound from './FixedBound';
 import Description from './Description';
 import ImageExport from './ImageExport';
 
@@ -96,7 +96,7 @@ function StateMap({ id, name }) {
                     preferCanvas={true}
                 >
                     <GeoJSON style={mapStyle} data={data} onEachFeature={onEachDistricts} ref={geojsonRef} />
-                    {/* <FixedBound /> */}
+                    <FixedBound />
                     <HomeButton position="topright" />
                     <ZoomControl position='bottomright' />
                     <Description position='bottomleft' title="Hover Districts" />
