@@ -9,12 +9,25 @@ import CountryButtonControl from './controls/CountryButtonControl';
 import FixedBound from './FixedBound';
 import DescriptionControl from './controls/DescriptionControl';
 import ImageExportControl from './controls/ImageExportControl';
+import MapCustomizer from './controls/MapCustomizer';
+import MapCustomizerControl from './controls/MapCustomizerControl';
 
 
 
 function StateMap({ id, name }) {
     const [data, setData] = useState(null)
     const [mapCenter, setMapCenter] = useState(null)
+    const [editActive, setEditActive] = useState(false)
+    const [opacity, setOpacity] = useState(100)
+    const [fillColor, setFillColor] = useState("#3498db");
+    const [borderColor, setBorderColor] = useState("#000000");
+    const [borderWidth, setBorderWidth] = useState(1);
+    const [mapStyle, setMapStyle] = useState({
+        "weight": 1,
+        "color": "black",
+        "fillColor": "#3498db",
+        "fillOpacity": opacity
+    })
     const geojsonRef = useRef(null)
 
     useEffect(() => {
@@ -27,17 +40,24 @@ function StateMap({ id, name }) {
         fetchData()
     }, [])
 
-    const mapStyle = {
-        weight: 1,
-        color: "black",
-        fillOpacity: 1
-    }
+    useEffect(() => {
+        setMapStyle({
+            "fillOpacity": opacity,
+            "fillColor": fillColor,
+            "weight": borderWidth,
+            "color": borderColor
+        })
+    }, [
+        opacity, fillColor,
+        borderColor, borderWidth,
+        setFillColor, setOpacity,
+        setBorderColor, setBorderWidth
+    ])
 
     const onEachDistricts = (district, layer) => {
         const districtName = district.properties.district;
         layer.bindTooltip(districtName);
         layer.setStyle({
-            fillColor: generateRedShade(),
             className: "hover:sepia"
         })
 
@@ -58,7 +78,14 @@ function StateMap({ id, name }) {
 
     return (
         data !== null ? (
-            <div className="bg-gray-200">
+            <div className="relative md:aspect-4/3 lg:aspect-video aspect-square overflow-hidden">
+                <MapCustomizer
+                    active={editActive}
+                    updateOpacity={setOpacity}
+                    updateFillColor={setFillColor}
+                    updateBorderWidth={setBorderWidth}
+                    updateBorderColor={setBorderColor}
+                />
                 <MapContainer
                     className="outline-none md:aspect-4/3 lg:aspect-video aspect-square"
                     zoom={6}
@@ -76,7 +103,10 @@ function StateMap({ id, name }) {
                     <CountryButtonControl position="topright" />
                     <ZoomControl position='bottomright' />
                     <DescriptionControl position='bottomleft' title="Hover Districts" />
-                    <ImageExportControl position="topleft" fileName={name} />
+                    <ImageExportControl className="mt-9" position="topleft" fileName={name} />
+                    <MapCustomizerControl position='topleft' onPress={(event) => {
+                        setEditActive(true)
+                    }} />
                 </MapContainer></div>) : <Loader />
         )
 }
