@@ -9,10 +9,10 @@ import 'leaflet-fullscreen/dist/Leaflet.fullscreen.js';
 import 'leaflet-fullscreen/dist/leaflet.fullscreen.css';
 import Loader from './Loader'
 import FixedBound from './FixedBound'
-import ImageExportControl from './ImageExportControl'
-import DescriptionControl from './DescriptionControl'
-import MapCustomizerControl from './MapCustomizerControl'
-import MapCustomizer from './MapCustomizer'
+import ImageExportControl from './controls/ImageExportControl'
+import DescriptionControl from './controls/DescriptionControl'
+import MapCustomizerControl from './controls/MapCustomizerControl'
+import MapCustomizer from './controls/MapCustomizer'
 
 function MapEventController({ customizerControl }) {
     const mapEvents = useMapEvents({

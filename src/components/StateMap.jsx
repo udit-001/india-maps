@@ -7,8 +7,8 @@ import 'leaflet-fullscreen/dist/leaflet.fullscreen.css';
 import Loader from './Loader';
 import { Link, Outlet } from 'react-router-dom';
 import FixedBound from './FixedBound';
-import DescriptionControl from './DescriptionControl';
-import ImageExportControl from './ImageExportControl';
+import DescriptionControl from './controls/DescriptionControl';
+import ImageExportControl from './controls/ImageExportControl';
 
 
 function HomeButton({ position }) {

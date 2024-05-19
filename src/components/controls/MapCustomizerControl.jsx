@@ -1,5 +1,5 @@
 import React from 'react'
-import { POSITION_CLASSES } from '../utils'
+import { POSITION_CLASSES } from '../../utils'
 
 function MapCustomizerControl({ className, position, onPress }) {
     const positionClass =

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useMap } from 'react-leaflet'
-import { POSITION_CLASSES } from '../utils'
+import { POSITION_CLASSES } from '../../utils'
 import { saveAs } from "file-saver";
 import { toPng, toJpeg, toSvg } from 'html-to-image';
 
