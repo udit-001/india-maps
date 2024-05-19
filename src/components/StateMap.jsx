@@ -57,9 +57,7 @@ function StateMap({ id, name }) {
     const onEachDistricts = (district, layer) => {
         const districtName = district.properties.district;
         layer.bindTooltip(districtName);
-        layer.setStyle({
-            className: "hover:sepia"
-        })
+        layer.setStyle({className: "hover:brightness-125"})
 
         layer.on({
             mouseover: (event) => {
