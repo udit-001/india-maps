@@ -1,12 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useMap } from 'react-leaflet'
 
 function FixedBound() {
     const map = useMap();
-    const bounds = map.getBounds();
-    map.setMaxBounds(bounds);
-    map.fitBounds(bounds, { reset: true });
-    return
+
+    useEffect(() => {
+        const bounds = map.getBounds();
+        map.setMaxBounds(bounds);
+        map.fitBounds(bounds, { reset: true });
+    }, [map])
+    return null
 }
 
 export default FixedBound
