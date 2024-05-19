@@ -89,7 +89,6 @@ function StateMap({ id, name }) {
                     fullscreenControl={{ position: 'bottomright' }}
                     fitBounds={true}
                     maxBoundsViscosity={0.3}
-                    preferCanvas={true}
                 >
                     <GeoJSON style={mapStyle} data={data} onEachFeature={onEachDistricts} ref={geojsonRef} />
                     <FixedBound />
