@@ -56,24 +56,20 @@ function StateMap({ id, name }) {
         const districtName = district.properties.district;
         layer.bindTooltip(districtName);
         layer.setStyle({
-            fillColor: generateRedShade()
+            fillColor: generateRedShade(),
+            className: "hover:sepia"
         })
 
         layer.on({
             mouseover: (event) => {
                 event.target.setStyle({
-                    weight: 3,
-                    color: "rgb(71 85 105)",
-                    dashArray: "0 4 0",
-                    fillOpacity: 0.98
+                    "dashArray": "0 4 0",
                 })
             },
             mouseout: (event) => {
+                event.target.closeTooltip()
                 event.target.setStyle({
-                    weight: 1,
-                    color: "black",
-                    dashArray: "",
-                    fillOpacity: 1
+                    "dashArray": ""
                 })
             },
         })
