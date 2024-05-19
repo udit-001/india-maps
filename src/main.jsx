@@ -9,12 +9,14 @@ import Layout from './Layout.jsx'
 import CountryMap from './components/CountryMap.jsx'
 import Map from './pages/Map.jsx'
 import Home from './pages/Home.jsx'
+import MeetupMap from './components/MeetupMap.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
       <Route path="" element={<Home />}/>
-      <Route path="india" element={<CountryMap />} />
+      <Route path="india" element={<CountryMap enableCustomizer={true} />} />
+      <Route path="meetups" element={<MeetupMap />} />
       <Route path=":id" element={<Map />} />
     </Route>
   ))

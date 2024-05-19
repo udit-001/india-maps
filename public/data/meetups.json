@@ -1,0 +1,176 @@
+[
+    {
+        "name": "Bangpypers",
+        "url": "http://www.meetup.com/BangPypers",
+        "region": "Bengaluru",
+        "tag": "python"
+    },
+    {
+        "name": "PyJaipur",
+        "url": "https://pyjaipur.github.io/",
+        "region": "Jaipur",
+        "tag": "python"
+    },
+    {
+        "name": "BarodaPUG",
+        "url": "https://www.facebook.com/BarodaPUG/",
+        "region": "Vadodara",
+        "tag": "python"
+    },
+    {
+        "name": "KolPy",
+        "url": "http://mail.python.org/mailman/listinfo/kolpy",
+        "region": "Kolkata",
+        "tag": "python"
+    },
+    {
+        "name": "Dehradun Python User Group (DPUG)",
+        "url": "http://dehradunpython.com/",
+        "region": "Dehradun",
+        "tag": "python"
+    },
+    {
+        "name": "PyDev Baroda",
+        "url": "https://www.facebook.com/pydevbaroda",
+        "region": "Vadodara",
+        "tag": "python"
+    },
+    {
+        "name": "GTU Python",
+        "url": "http://www.meetup.com/gtupython/",
+        "region": "Ahemdabad",
+        "tag": "python"
+    },
+    {
+        "name": "PyGuj",
+        "url": "https://twitter.com/pyguj",
+        "region": "Gujarat",
+        "tag": "python"
+    },
+    {
+        "name": "ChennaiPy",
+        "url": "http://chennaipy.org/",
+        "region": "Chennai",
+        "tag": "python"
+    },
+    {
+        "name": "KPUG",
+        "url": "http://kpug.zwiki.org/",
+        "region": "Kerala",
+        "tag": "python"
+    },
+    {
+        "name": "JSLovers Mumbai",
+        "url": "https://www.meetup.com/jslovers-mumbai-chapter/",
+        "tag": "javascript",
+        "region": "Mumbai"
+    },
+    {
+        "name": "JSLovers Bengaluru",
+        "url": "https://www.meetup.com/jslovers-bengaluru/",
+        "tag": "javascript",
+        "region": "Bengaluru"
+    },
+    {
+        "name": "JSLovers Pune",
+        "url": "https://www.meetup.com/jslovers-pune/",
+        "tag": "javascript",
+        "region": "Pune"
+    },
+    {
+        "name": "JSLovers Hyderabad",
+        "url": "https://www.meetup.com/jslovers-hyderabad/",
+        "tag": "javascript",
+        "region": "Hyderabad"
+    },
+    {
+        "name": "JSLovers Delhi",
+        "url": "https://www.meetup.com/jslovers/",
+        "tag": "javascript",
+        "region": "Delhi"
+    },
+    {
+        "name": "FOSS United Bengaluru",
+        "url": "https://fossunited.org/bengaluru",
+        "tag": "foss",
+        "region": "Bengaluru"
+    },
+    {
+        "name": "FOSS United Chennai",
+        "url": "https://fossunited.org/chennai",
+        "tag": "foss",
+        "region": "Chennai"
+    },
+    {
+        "name": "FOSS United Dehradun",
+        "url": "https://fossunited.org/dehradun",
+        "tag": "foss",
+        "region": "Dehradun"
+    },
+    {
+        "name": "FOSS United Delhi",
+        "url": "https://fossunited.org/delhi",
+        "tag": "foss",
+        "region": "Delhi"
+    },
+    {
+        "name": "FOSS United Goa",
+        "url": "https://fossunited.org/goa",
+        "tag": "foss",
+        "region": "Goa"
+    },
+    {
+        "name": "FOSS United Hyderabad",
+        "url": "https://fossunited.org/hyderabad",
+        "tag": "foss",
+        "region": "Hyderabad"
+    },
+    {
+        "name": "FOSS United Jalandhar",
+        "url": "https://fossunited.org/jalandhar",
+        "tag": "foss",
+        "region": "Jalandhar"
+    },
+    {
+        "name": "FOSS United Kochi",
+        "url": "https://fossunited.org/kochi",
+        "tag": "foss",
+        "region": "Kochi"
+    },
+    {
+        "name": "FOSS United Lucknow",
+        "url": "https://fossunited.org/lucknow",
+        "tag": "foss",
+        "region": "Lucknow"
+    },
+    {
+        "name": "FOSS United Mangalore",
+        "url": "https://fossunited.org/mangalore",
+        "tag": "foss",
+        "region": "Mangalore"
+    },
+    {
+        "name": "FOSS United Mumbai",
+        "url": "https://fossunited.org/mumbai",
+        "tag": "foss",
+        "region": "Mumbai"
+    },
+    {
+        "name": "FOSS United Nagpur",
+        "url": "https://fossunited.org/nagpur",
+        "tag": "foss",
+        "region": "Nagpur"
+    },
+    {
+        "name": "FOSS United Vadodara",
+        "url": "https://fossunited.org/vadodara",
+        "tag": "foss",
+        "region": "Vadodara"
+    },
+    {
+        "name": "FOSS United Pune",
+        "url": "https://fossunited.org/chapters/pune",
+        "tag": "foss",
+        "region": "Pune"
+    }
+]

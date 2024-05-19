@@ -14,9 +14,10 @@ import DescriptionControl from './controls/DescriptionControl'
 import MapCustomizerControl from './controls/MapCustomizerControl'
 import MapCustomizer from './controls/MapCustomizer'
 import MapEventHandler from './controls/MapEventHandler'
+import MarkerGroups from './MarkerGroups'
 
 
-function CountryMap() {
+function CountryMap({ enableCustomizer = false, title = "India", markers = [], featureEffects = true }) {
     const [data, setData] = useState({})
     const [editActive, setEditActive] = useState(false)
     const [opacity, setOpacity] = useState(100)
@@ -39,7 +40,6 @@ function CountryMap() {
             setData(result)
         }
         fetchData()
-
     }, [])
 
     useEffect(() => {
@@ -58,39 +58,43 @@ function CountryMap() {
 
     const onEachStates = useCallback((state, layer) => {
         const stateName = state.properties.st_nm;
-        layer.bindTooltip(stateName)
-        layer.setStyle({ "className": "hover:brightness-125" })
+        if (featureEffects === true) {
+            layer.bindTooltip(stateName)
+            layer.setStyle({ "className": "hover:brightness-125" })
 
-        layer.on({
-            mouseover: (event) => {
-                event.target.setStyle({
-                    "dashArray": "0 4 0",
-                })
-            },
-            mouseout: (event) => {
-                event.target.closeTooltip()
-                event.target.setStyle({
-                    "dashArray": ""
-                })
-            },
-            click: (event) => {
-                var slug = slugify(event.target.feature.properties.st_nm)
-                navigate(`/${slug}`)
-            }
-        })
+            layer.on({
+                mouseover: (event) => {
+                    event.target.setStyle({
+                        "dashArray": "0 4 0",
+                    })
+                },
+                mouseout: (event) => {
+                    event.target.closeTooltip()
+                    event.target.setStyle({
+                        "dashArray": ""
+                    })
+                },
+                click: (event) => {
+                    var slug = slugify(event.target.feature.properties.st_nm)
+                    navigate(`/${slug}`)
+                }
+            })
+        }
+
     }, [borderWidth, borderColor, opacity, mapStyle])
 
     if (Object.keys(data).length !== 0) return (
         <>
-            <Header title="India" />
+            <Header title={title} />
             <div className="relative md:aspect-4/3 lg:aspect-video aspect-square overflow-hidden">
-                <MapCustomizer
+                {enableCustomizer ? <MapCustomizer
                     active={editActive}
                     updateOpacity={setOpacity}
                     updateFillColor={setFillColor}
                     updateBorderWidth={setBorderWidth}
                     updateBorderColor={setBorderColor}
-                />
+                /> : ""}
+
                 <MapContainer
                     className="outline-none h-full"
                     zoom={4}
@@ -106,12 +110,13 @@ function CountryMap() {
                     <MapEventHandler customizerControl={setEditActive} />
                     <GeoJSON style={mapStyle} data={data.features} onEachFeature={onEachStates} />
                     <FixedBound />
+                    {markers ? <MarkerGroups markerData={markers} /> : ""}
                     <ZoomControl position='bottomright' />
                     <DescriptionControl position='bottomleft' title="Click/Hover States" />
-                    <ImageExportControl className="mt-9" position='topleft' fileName="India" />
-                    <MapCustomizerControl position='topleft' onPress={(event) => {
+                    <ImageExportControl className={enableCustomizer ? "mt-9" : ""} position='topleft' fileName="India" />
+                    {enableCustomizer ? <MapCustomizerControl position='topleft' onPress={(event) => {
                         setEditActive(true)
-                    }} />
+                    }} /> : ""}
                 </MapContainer>
             </div>
         </>
@@ -119,7 +124,7 @@ function CountryMap() {
     else {
         return (
             <>
-                <Header title="India" />
+                <Header title={title} />
                 <Loader />
             </>
         )
