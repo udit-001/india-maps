@@ -11,6 +11,7 @@ import DescriptionControl from './controls/DescriptionControl';
 import ImageExportControl from './controls/ImageExportControl';
 import MapCustomizer from './controls/MapCustomizer';
 import MapCustomizerControl from './controls/MapCustomizerControl';
+import MapEventHandler from './controls/MapEventHandler';
 
 
 
@@ -96,7 +97,8 @@ function StateMap({ id, name }) {
                     fitBounds={true}
                     maxBoundsViscosity={0.3}
                 >
-                    <GeoJSON style={mapStyle} data={data} onEachFeature={onEachDistricts} ref={geojsonRef} />
+                    <MapEventHandler customizerControl={setEditActive} />
+                    <GeoJSON style={mapStyle} data={data.features} onEachFeature={onEachDistricts} ref={geojsonRef} />
                     <FixedBound />
                     <CountryButtonControl position="topright" />
                     <ZoomControl position='bottomright' />

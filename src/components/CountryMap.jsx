@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 
-import { MapContainer, GeoJSON, ZoomControl, useMapEvents } from 'react-leaflet'
+import { MapContainer, GeoJSON, ZoomControl } from 'react-leaflet'
 
 import Header from './Header'
 import { slugify } from '../utils'
@@ -13,14 +13,7 @@ import ImageExportControl from './controls/ImageExportControl'
 import DescriptionControl from './controls/DescriptionControl'
 import MapCustomizerControl from './controls/MapCustomizerControl'
 import MapCustomizer from './controls/MapCustomizer'
-
-function MapEventController({ customizerControl }) {
-    const mapEvents = useMapEvents({
-        click: () => {
-            customizerControl(false)
-        }
-    })
-}
+import MapEventHandler from './controls/MapEventHandler'
 
 
 function CountryMap() {
@@ -101,16 +94,18 @@ function CountryMap() {
                 <MapContainer
                     className="outline-none h-full"
                     zoom={4}
+                    attributionControl={false}
+                    center={[22, 80]}
+                    zoomControl={false}
                     zoomDelta={0.3}
                     zoomSnap={0.25}
-                    attributionControl={false}
-                    zoomControl={false}
-                    center={[22, 80]}
                     fullscreenControl={{ position: 'bottomright' }}
+                    fitBounds={true}
+                    maxBoundsViscosity={0.3}
                 >
-                    <MapEventController customizerControl={setEditActive} />
-                    <FixedBound />
+                    <MapEventHandler customizerControl={setEditActive} />
                     <GeoJSON style={mapStyle} data={data.features} onEachFeature={onEachStates} />
+                    <FixedBound />
                     <ZoomControl position='bottomright' />
                     <DescriptionControl position='bottomleft' title="Click/Hover States" />
                     <ImageExportControl className="mt-9" position='topleft' fileName="India" />
