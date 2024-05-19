@@ -11,6 +11,9 @@ function MapEventHandler({ customizerControl }) {
         },
         move: () => {
             customizerControl(false)
+        },
+        mouseup: () => {
+            customizerControl(false)
         }
     })
     return null
