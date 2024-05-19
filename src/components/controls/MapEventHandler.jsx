@@ -5,6 +5,12 @@ function MapEventHandler({ customizerControl }) {
     const map = useMapEvents({
         click: () => {
             customizerControl(false)
+        },
+        drag: () => {
+            customizerControl(false)
+        },
+        move: () => {
+            customizerControl(false)
         }
     })
     return null
