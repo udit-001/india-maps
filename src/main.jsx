@@ -14,7 +14,7 @@ import MeetupMap from './components/MeetupMap.jsx'
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
-      <Route path="" element={<Home />}/>
+      <Route path="" element={<Home />} />
       <Route path="india" element={<CountryMap enableCustomizer={true} />} />
       <Route path="meetups" element={<MeetupMap />} />
       <Route path=":id" element={<Map />} />
