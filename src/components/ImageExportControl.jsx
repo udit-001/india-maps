@@ -66,7 +66,7 @@ function DownloadButtons({ active, map, fileName}) {
     return
 }
 
-function ImageExport({ className, position, fileName = "mymap" }) {
+function ImageExportControl({ className, position, fileName = "mymap" }) {
     const positionClass =
         (position && POSITION_CLASSES[position]) || POSITION_CLASSES.topright
     const map = useMap()
@@ -86,4 +86,4 @@ function ImageExport({ className, position, fileName = "mymap" }) {
     )
 }
 
-export default ImageExport
+export default ImageExportControl

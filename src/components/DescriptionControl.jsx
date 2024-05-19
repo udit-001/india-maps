@@ -1,7 +1,7 @@
 import React from 'react'
 import { POSITION_CLASSES } from '../utils'
 
-function Description({ position, title }) {
+function DescriptionControl({ position, title }) {
     const positionClass =
         (position && POSITION_CLASSES[position]) || POSITION_CLASSES.topright
     return (
@@ -13,4 +13,4 @@ function Description({ position, title }) {
     )
 }
 
-export default Description
+export default DescriptionControl

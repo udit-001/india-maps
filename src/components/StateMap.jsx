@@ -7,8 +7,8 @@ import 'leaflet-fullscreen/dist/leaflet.fullscreen.css';
 import Loader from './Loader';
 import { Link, Outlet } from 'react-router-dom';
 import FixedBound from './FixedBound';
-import Description from './Description';
-import ImageExport from './ImageExport';
+import DescriptionControl from './DescriptionControl';
+import ImageExportControl from './ImageExportControl';
 
 
 function HomeButton({ position }) {
@@ -99,8 +99,8 @@ function StateMap({ id, name }) {
                     <FixedBound />
                     <HomeButton position="topright" />
                     <ZoomControl position='bottomright' />
-                    <Description position='bottomleft' title="Hover Districts" />
-                    <ImageExport position="topleft" fileName={name} />
+                    <DescriptionControl position='bottomleft' title="Hover Districts" />
+                    <ImageExportControl position="topleft" fileName={name} />
                 </MapContainer></div>) : <Loader />
         )
 }

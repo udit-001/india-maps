@@ -9,8 +9,8 @@ import 'leaflet-fullscreen/dist/Leaflet.fullscreen.js';
 import 'leaflet-fullscreen/dist/leaflet.fullscreen.css';
 import Loader from './Loader'
 import FixedBound from './FixedBound'
-import ImageExport from './ImageExport'
-import Description from './Description'
+import ImageExportControl from './ImageExportControl'
+import DescriptionControl from './DescriptionControl'
 import MapCustomizerControl from './MapCustomizerControl'
 import MapCustomizer from './MapCustomizer'
 
@@ -112,8 +112,8 @@ function CountryMap() {
                     <FixedBound />
                     <GeoJSON style={mapStyle} data={data.features} onEachFeature={onEachStates} />
                     <ZoomControl position='bottomright' />
-                    <Description position='bottomleft' title="Click/Hover States" />
-                    <ImageExport className="mt-9" position='topleft' fileName="India" />
+                    <DescriptionControl position='bottomleft' title="Click/Hover States" />
+                    <ImageExportControl className="mt-9" position='topleft' fileName="India" />
                     <MapCustomizerControl position='topleft' onPress={(event) => {
                         setEditActive(true)
                     }} />
