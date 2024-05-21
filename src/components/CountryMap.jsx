@@ -16,6 +16,7 @@ import MapCustomizer from './controls/MapCustomizer'
 import MapEventHandler from './controls/MapEventHandler'
 import MarkerGroups from './MarkerGroups'
 import { MapContextProvider } from '../contexts/mapContext'
+import { compareObjects } from '../utils'
 
 
 function CountryMap({ enableCustomizer = false, title = "India", markers = [], featureEffects = true }) {
@@ -55,6 +56,14 @@ function CountryMap({ enableCustomizer = false, title = "India", markers = [], f
     }
 
     useEffect(() => {
+        if (localStorage.getItem("countryMapStyle")) {
+            const data = JSON.parse(localStorage.getItem("countryMapStyle"))
+            setBorderColor(data.color)
+            setBorderWidth(data.weight)
+            setFillColor(data.fillColor)
+            setFillOpacity(data.fillOpacity * 100)
+        }
+
         const fetchData = async () => {
             var response = await fetch("https://cdn.jsdelivr.net/gh/udit-001/india-maps-data@latest/geojson/india.geojson")
             var result = await response.json()
@@ -64,11 +73,25 @@ function CountryMap({ enableCustomizer = false, title = "India", markers = [], f
     }, [])
 
     useEffect(() => {
-        setMapStyle({
-            "fillOpacity": fillOpacity / 100,
-            "fillColor": fillColor,
-            "weight": borderWidth,
-            "color": borderColor
+        setMapStyle((prevStyle) => {
+            var newStyle = {
+                "fillOpacity": fillOpacity / 100,
+                "fillColor": fillColor,
+                "weight": borderWidth,
+                "color": borderColor
+            }
+
+            if(localStorage.getItem("countryMapStyle")){
+                const equals = compareObjects(prevStyle, newStyle)
+                if(equals === false){
+                    localStorage.setItem("countryMapStyle", JSON.stringify(newStyle))
+                }
+            }
+            else{
+                localStorage.setItem("countryMapStyle", JSON.stringify(newStyle))
+            }
+
+            return newStyle
         })
     }, [
         fillOpacity, fillColor,
