@@ -7,9 +7,6 @@ import L from 'leaflet'
 import { LayersControl, FeatureGroup, Marker, Popup } from 'react-leaflet'
 
 function MarkerItem({ element, index }) {
-    useEffect(() => {
-        console.log("Adding marker item")
-    }, [])
 
     const pythonIcon = new L.Icon({
         iconUrl: pythonLogo,
@@ -57,9 +54,6 @@ function MarkerItem({ element, index }) {
 }
 
 function MarkerGroup({ group }) {
-    useEffect(() => {
-        console.log(`Hello ${group[0]['tag']}`)
-    }, [])
 
     return (
         <LayersControl.Overlay name={group[0]['tag']}>
@@ -73,9 +67,6 @@ function MarkerGroup({ group }) {
 }
 
 function MarkerGroups({ markerData }) {
-    useEffect(() => {
-        console.log(markerData)
-    }, [])
 
     if (markerData.length !== 0) {
         return (
