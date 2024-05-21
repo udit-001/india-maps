@@ -13,6 +13,7 @@ import MapCustomizer from './controls/MapCustomizer';
 import MapCustomizerControl from './controls/MapCustomizerControl';
 import MapEventHandler from './controls/MapEventHandler';
 import { MapContextProvider } from '../contexts/mapContext'
+import { compareObjects } from '../utils';
 
 
 
@@ -53,6 +54,14 @@ function StateMap({ id, name }) {
     }
 
     useEffect(() => {
+        if (localStorage.getItem("districtMapStyle")) {
+            const data = JSON.parse(localStorage.getItem("districtMapStyle"))
+            setBorderColor(data.color)
+            setBorderWidth(data.weight)
+            setFillColor(data.fillColor)
+            setFillOpacity(data.fillOpacity * 100)
+        }
+
         const fetchData = async () => {
             var response = await fetch(`https://cdn.jsdelivr.net/gh/udit-001/india-maps-data@latest/geojson/states/${id}.geojson`)
             var data = await response.json()
@@ -63,11 +72,25 @@ function StateMap({ id, name }) {
     }, [])
 
     useEffect(() => {
-        setMapStyle({
-            "fillOpacity": fillOpacity / 100,
-            "fillColor": fillColor,
-            "weight": borderWidth,
-            "color": borderColor
+        setMapStyle((prevStyle) => {
+            var newStyle = {
+                "fillOpacity": fillOpacity / 100,
+                "fillColor": fillColor,
+                "weight": borderWidth,
+                "color": borderColor
+            }
+
+            if (localStorage.getItem("districtMapStyle")) {
+                const equals = compareObjects(prevStyle, newStyle)
+                if (equals === false) {
+                    localStorage.setItem("districtMapStyle", JSON.stringify(newStyle))
+                }
+            }
+            else {
+                localStorage.setItem("districtMapStyle", JSON.stringify(newStyle))
+            }
+
+            return newStyle
         })
     }, [
         fillOpacity, fillColor,
