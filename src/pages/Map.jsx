@@ -9,7 +9,9 @@ function Map() {
   const { id } = useParams()
 
   useEffect(() => {
-    setTitle(toTitleCase(id.replaceAll("-", " ")))
+    const stateName = toTitleCase(id.replaceAll("-", " "));
+    setTitle(stateName)
+    document.title = `${stateName} Map`;
   }, [])
 
   return (
