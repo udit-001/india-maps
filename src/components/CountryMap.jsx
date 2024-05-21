@@ -4,7 +4,7 @@ import { MapContainer, GeoJSON, ZoomControl } from 'react-leaflet'
 
 import Header from './Header'
 import { slugify } from '../utils'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import 'leaflet-fullscreen/dist/Leaflet.fullscreen.js';
 import 'leaflet-fullscreen/dist/leaflet.fullscreen.css';
 import Loader from './Loader'
@@ -33,6 +33,8 @@ function CountryMap({ enableCustomizer = false, title = "India", markers = [], f
         "color": "#000000"
     })
 
+    const currentRoute = useLocation().pathname.replace("/", "")
+
     const navigate = useNavigate();
 
     const updateFillColor = (fillColor) => {
@@ -56,8 +58,8 @@ function CountryMap({ enableCustomizer = false, title = "India", markers = [], f
     }
 
     useEffect(() => {
-        if (localStorage.getItem("countryMapStyle")) {
-            const data = JSON.parse(localStorage.getItem("countryMapStyle"))
+        if (localStorage.getItem(currentRoute)) {
+            const data = JSON.parse(localStorage.getItem(currentRoute))
             setBorderColor(data.color)
             setBorderWidth(data.weight)
             setFillColor(data.fillColor)
@@ -81,14 +83,14 @@ function CountryMap({ enableCustomizer = false, title = "India", markers = [], f
                 "color": borderColor
             }
 
-            if(localStorage.getItem("countryMapStyle")){
+            if(localStorage.getItem(currentRoute)){
                 const equals = compareObjects(prevStyle, newStyle)
                 if(equals === false){
-                    localStorage.setItem("countryMapStyle", JSON.stringify(newStyle))
+                    localStorage.setItem(currentRoute, JSON.stringify(newStyle))
                 }
             }
             else{
-                localStorage.setItem("countryMapStyle", JSON.stringify(newStyle))
+                localStorage.setItem(currentRoute, JSON.stringify(newStyle))
             }
 
             return newStyle

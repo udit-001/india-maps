@@ -14,6 +14,8 @@ import MapCustomizerControl from './controls/MapCustomizerControl';
 import MapEventHandler from './controls/MapEventHandler';
 import { MapContextProvider } from '../contexts/mapContext'
 import { compareObjects } from '../utils';
+import { useLocation } from 'react-router';
+
 
 
 
@@ -32,6 +34,8 @@ function StateMap({ id, name }) {
         "color": "#000000"
     })
     const geojsonRef = useRef(null)
+
+    const currentRoute = useLocation().pathname.replace("/", "")
 
     const updateFillColor = (fillColor) => {
         setFillColor(fillColor)
@@ -54,8 +58,8 @@ function StateMap({ id, name }) {
     }
 
     useEffect(() => {
-        if (localStorage.getItem("districtMapStyle")) {
-            const data = JSON.parse(localStorage.getItem("districtMapStyle"))
+        if (localStorage.getItem(currentRoute)) {
+            const data = JSON.parse(localStorage.getItem(currentRoute))
             setBorderColor(data.color)
             setBorderWidth(data.weight)
             setFillColor(data.fillColor)
@@ -80,14 +84,14 @@ function StateMap({ id, name }) {
                 "color": borderColor
             }
 
-            if (localStorage.getItem("districtMapStyle")) {
+            if (localStorage.getItem(currentRoute)) {
                 const equals = compareObjects(prevStyle, newStyle)
                 if (equals === false) {
-                    localStorage.setItem("districtMapStyle", JSON.stringify(newStyle))
+                    localStorage.setItem(currentRoute, JSON.stringify(newStyle))
                 }
             }
             else {
-                localStorage.setItem("districtMapStyle", JSON.stringify(newStyle))
+                localStorage.setItem(currentRoute, JSON.stringify(newStyle))
             }
 
             return newStyle
