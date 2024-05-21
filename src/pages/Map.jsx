@@ -16,8 +16,8 @@ function Map() {
 
   return (
     <>
-        <Header title={title}/>
-        <StateMap id={id} name={title}/>
+      <Header title={title} />
+      <StateMap id={id} name={title} />
     </>
   )
 }
