@@ -19,7 +19,7 @@ import { MapContextProvider } from '../contexts/mapContext'
 import { compareObjects } from '../utils'
 
 
-function CountryMap({ enableCustomizer = false, title = "India", markers = [], featureEffects = true }) {
+function CountryMap({ enableCustomizer = false, title = "India", markers = [], featureEffects = true, description = "Click/Hover States" }) {
     const [data, setData] = useState({})
     const [customizerActive, setCustomizerActive] = useState(false)
     const [fillOpacity, setFillOpacity] = useState(100)
@@ -162,7 +162,7 @@ function CountryMap({ enableCustomizer = false, title = "India", markers = [], f
                         <FixedBound />
                         {markers ? <MarkerGroups markerData={markers} /> : ""}
                         <ZoomControl position='bottomright' />
-                        <DescriptionControl position='bottomleft' title="Click/Hover States" />
+                        <DescriptionControl position='bottomleft' title={description} />
                         <ImageExportControl className={enableCustomizer ? "mt-9" : ""} position='topleft' fileName="India" />
                         {enableCustomizer ? <MapCustomizerControl position='topleft' onPress={(event) => {
                             setCustomizerActive(true)

@@ -62,7 +62,7 @@ function MeetupMap() {
     }, [])
 
     return (
-        <CountryMap title="India Meetups" markers={markerData} featureEffects={false} />
+        <CountryMap title="India Meetups" markers={markerData} featureEffects={false} enableCustomizer={true} description='Click markers to view details'/>
     )
 }
 
