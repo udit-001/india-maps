@@ -1,19 +1,22 @@
 import React from 'react'
 import { useMapEvents } from 'react-leaflet'
+import { useMapContext } from '../../contexts/mapContext'
 
-function MapEventHandler({ customizerControl }) {
+function MapEventHandler() {
+    const { updateCustomizerActive } = useMapContext()
+
     const map = useMapEvents({
         click: () => {
-            customizerControl(false)
+            updateCustomizerActive(false)
         },
         drag: () => {
-            customizerControl(false)
+            updateCustomizerActive(false)
         },
         move: () => {
-            customizerControl(false)
+            updateCustomizerActive(false)
         },
         mouseup: () => {
-            customizerControl(false)
+            updateCustomizerActive(false)
         }
     })
     return null

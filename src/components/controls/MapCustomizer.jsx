@@ -1,17 +1,33 @@
 import React, { useRef, useEffect, useState } from 'react'
+import { useMapContext } from '../../contexts/mapContext'
 
 function ColorTemplate({ fillColor, borderColor, onClick }) {
     return (
-        <div data-fillcolor={fillColor} data-bordercolor={borderColor} className='cursor-pointer w-8 h-8 hover:border hover:border-white' style={{ backgroundImage: `linear-gradient(135deg, ${fillColor} 75%, ${borderColor} 25%)` }} onClick={(event) => { onClick(event) }}></div>
+        <div
+            data-fillcolor={fillColor}
+            data-bordercolor={borderColor}
+            className='cursor-pointer w-8 h-8 hover:border hover:border-white'
+            style={{ backgroundImage: `linear-gradient(135deg, ${fillColor} 75%, ${borderColor} 25%)` }}
+            onClick={(event) => { onClick(event) }}
+        >
+        </div>
     )
 }
 
-function MapCustomizer({ updateFillColor, updateBorderWidth, updateOpacity, updateBorderColor, active = false }) {
-    const [isActive, setIsActive] = useState(active)
-    const [fillColor, setFillColor] = useState("#3498db");
-    const [borderColor, setBorderColor] = useState("#000000");
-    const [opacity, setOpacity] = useState(100);
-    const [borderWidth, setBorderWidth] = useState(1);
+function MapCustomizer() {
+    const {
+        borderColor,
+        borderWidth,
+        fillColor,
+        fillOpacity,
+        customizerActive,
+        updateBorderColor,
+        updateBorderWidth,
+        updateFillColor,
+        updateFillOpacity,
+        updateCustomizerActive
+    } = useMapContext()
+
     const [activeClass, setActiveClass] = useState("opacity-0 invisible");
 
     const containerRef = useRef()
@@ -25,41 +41,15 @@ function MapCustomizer({ updateFillColor, updateBorderWidth, updateOpacity, upda
     }, [])
 
     useEffect(() => {
-        if(isActive === true){
+        if (customizerActive === true) {
             setActiveClass("-translate-x-full")
             containerRef.current.classList.remove("invisible")
             setActiveClass("translate-x-0")
-        }   
-        if(!containerRef.current.classList.contains("invisible") && isActive === false) {
+        }
+        if (!containerRef.current.classList.contains("invisible") && customizerActive === false) {
             setActiveClass("-translate-x-full")
         }
-    }, [isActive, setIsActive])
-
-    useEffect(() => {
-        if(active === true && containerRef.current.classList.contains("invisible")){
-            containerRef.current.classList.remove("invisible")
-        }
-        if(active === false){
-            containerRef.current.classList.add("-translate-x-full")
-        }
-        setIsActive(active)
-    }, [active])
-
-    useEffect(() => {
-        updateFillColor(fillColor)
-    }, [fillColor, setFillColor])
-
-    useEffect(() => {
-        updateBorderColor(borderColor)
-    }, [borderColor, setBorderColor])
-
-    useEffect(() => {
-        updateBorderWidth(borderWidth)
-    }, [borderWidth, setBorderWidth])
-
-    useEffect(() => {
-        updateOpacity(opacity / 100)
-    }, [opacity, setOpacity])
+    }, [customizerActive])
 
     const colorTemplates = [
         {
@@ -98,11 +88,11 @@ function MapCustomizer({ updateFillColor, updateBorderWidth, updateOpacity, upda
                 <div className='grid grid-flow-col gap-x-14 text-slate-300 text-xs'>
                     <div className='grid justify-items-start gap-2'>
                         <h1>Color ({fillColor})</h1>
-                        <input className='border border-white border-solid' type="color" value={fillColor} onChange={(event) => setFillColor(event.target.value)} />
+                        <input className='border border-white border-solid' type="color" value={fillColor} onChange={(event) => updateFillColor(event.target.value)} />
                     </div>
                     <div className='grid justify-items-start gap-2'>
-                        <h1>Opacity <span className='font-semibold'>({opacity}%)</span></h1>
-                        <input type="range" min={0} max={100} step={1} value={opacity} onChange={(event) => { setOpacity(event.target.value) }} className='w-24' />
+                        <h1>Opacity <span className='font-semibold'>({fillOpacity}%)</span></h1>
+                        <input type="range" min={0} max={100} step={1} value={fillOpacity} onChange={(event) => { updateFillOpacity(event.target.value) }} className='w-24' />
                     </div>
                 </div>
             </div>
@@ -111,11 +101,11 @@ function MapCustomizer({ updateFillColor, updateBorderWidth, updateOpacity, upda
                 <div className='grid grid-flow-col gap-x-14 text-slate-300 text-xs'>
                     <div className='grid justify-items-start gap-2'>
                         <h1>Color ({borderColor})</h1>
-                        <input className='border border-white border-solid' type="color" value={borderColor} onChange={(event) => setBorderColor(event.target.value)} />
+                        <input className='border border-white border-solid' type="color" value={borderColor} onChange={(event) => updateBorderColor(event.target.value)} />
                     </div>
                     <div className='grid justify-items-start gap-2'>
                         <h1>Width <span className='font-semibold'>({borderWidth}px)</span></h1>
-                        <input type="range" className='appearance-auto w-24' min={0} max={10} step={0.1} onChange={(event) => { setBorderWidth(event.target.value) }} value={borderWidth} />
+                        <input type="range" className='appearance-auto w-24' min={0} max={10} step={0.1} onChange={(event) => { updateBorderWidth(event.target.value) }} value={borderWidth} />
                     </div>
                 </div>
             </div>
@@ -131,8 +121,8 @@ function MapCustomizer({ updateFillColor, updateBorderWidth, updateOpacity, upda
                                     fillColor={template.fillColor}
                                     borderColor={template.borderColor}
                                     onClick={(event) => {
-                                        setFillColor(event.target.dataset.fillcolor)
-                                        setBorderColor(event.target.dataset.bordercolor)
+                                        updateFillColor(event.target.dataset.fillcolor)
+                                        updateBorderColor(event.target.dataset.bordercolor)
                                     }} />
                             )
                         })
@@ -141,7 +131,7 @@ function MapCustomizer({ updateFillColor, updateBorderWidth, updateOpacity, upda
             </div>
             <div className='flex m-4'>
                 <button className='justify-left bg-gray-600 hover:bg-gray-500 text-xs text-white uppercase focus:border focus:border-slate-400 rounded py-2 px-3' onClick={() => {
-                    setIsActive(false)
+                    updateCustomizerActive(false)
                 }}>
                     Save & Close
                 </button>

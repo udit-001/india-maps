@@ -15,23 +15,44 @@ import MapCustomizerControl from './controls/MapCustomizerControl'
 import MapCustomizer from './controls/MapCustomizer'
 import MapEventHandler from './controls/MapEventHandler'
 import MarkerGroups from './MarkerGroups'
+import { MapContextProvider } from '../contexts/mapContext'
 
 
 function CountryMap({ enableCustomizer = false, title = "India", markers = [], featureEffects = true }) {
     const [data, setData] = useState({})
-    const [editActive, setEditActive] = useState(false)
-    const [opacity, setOpacity] = useState(100)
+    const [customizerActive, setCustomizerActive] = useState(false)
+    const [fillOpacity, setFillOpacity] = useState(100)
     const [fillColor, setFillColor] = useState("#3498db");
     const [borderColor, setBorderColor] = useState("#000000");
     const [borderWidth, setBorderWidth] = useState(1);
     const [mapStyle, setMapStyle] = useState({
-        "weight": 1,
-        "color": "black",
+        "fillOpacity": fillOpacity / 100,
         "fillColor": "#3498db",
-        "fillOpacity": opacity
+        "weight": 1,
+        "color": "#000000"
     })
 
     const navigate = useNavigate();
+
+    const updateFillColor = (fillColor) => {
+        setFillColor(fillColor)
+    }
+
+    const updateBorderColor = (borderColor) => {
+        setBorderColor(borderColor)
+    }
+
+    const updateBorderWidth = (borderWidth) => {
+        setBorderWidth(borderWidth)
+    }
+
+    const updateFillOpacity = (fillOpacity) => {
+        setFillOpacity(fillOpacity)
+    }
+
+    const updateCustomizerActive = (value) => {
+        setCustomizerActive(value)
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -44,15 +65,15 @@ function CountryMap({ enableCustomizer = false, title = "India", markers = [], f
 
     useEffect(() => {
         setMapStyle({
-            "fillOpacity": opacity,
+            "fillOpacity": fillOpacity / 100,
             "fillColor": fillColor,
             "weight": borderWidth,
             "color": borderColor
         })
     }, [
-        opacity, fillColor,
+        fillOpacity, fillColor,
         borderColor, borderWidth,
-        setFillColor, setOpacity,
+        setFillColor, setFillOpacity,
         setBorderColor, setBorderWidth
     ])
 
@@ -81,44 +102,51 @@ function CountryMap({ enableCustomizer = false, title = "India", markers = [], f
             })
         }
 
-    }, [borderWidth, borderColor, opacity, mapStyle])
+    }, [borderWidth, borderColor, fillOpacity])
 
     if (Object.keys(data).length !== 0) return (
         <>
-            <Header title={title} />
-            <div className="relative md:aspect-4/3 lg:aspect-video aspect-square overflow-hidden">
-                {enableCustomizer ? <MapCustomizer
-                    active={editActive}
-                    updateOpacity={setOpacity}
-                    updateFillColor={setFillColor}
-                    updateBorderWidth={setBorderWidth}
-                    updateBorderColor={setBorderColor}
-                /> : ""}
+            <MapContextProvider value={{
+                borderColor,
+                borderWidth,
+                fillColor,
+                fillOpacity,
+                customizerActive,
+                updateBorderColor,
+                updateBorderWidth,
+                updateFillColor,
+                updateFillOpacity,
+                updateCustomizerActive
+            }}>
+                <Header title={title} />
+                <div className="relative md:aspect-4/3 lg:aspect-video aspect-square overflow-hidden">
+                    {enableCustomizer ? <MapCustomizer /> : ""}
 
-                <MapContainer
-                    className="outline-none h-full"
-                    zoom={4}
-                    attributionControl={false}
-                    center={[22, 80]}
-                    zoomControl={false}
-                    zoomDelta={0.3}
-                    zoomSnap={0.25}
-                    fullscreenControl={{ position: 'bottomright' }}
-                    fitBounds={true}
-                    maxBoundsViscosity={0.3}
-                >
-                    <MapEventHandler customizerControl={setEditActive} />
-                    <GeoJSON style={mapStyle} data={data.features} onEachFeature={onEachStates} />
-                    <FixedBound />
-                    {markers ? <MarkerGroups markerData={markers} /> : ""}
-                    <ZoomControl position='bottomright' />
-                    <DescriptionControl position='bottomleft' title="Click/Hover States" />
-                    <ImageExportControl className={enableCustomizer ? "mt-9" : ""} position='topleft' fileName="India" />
-                    {enableCustomizer ? <MapCustomizerControl position='topleft' onPress={(event) => {
-                        setEditActive(true)
-                    }} /> : ""}
-                </MapContainer>
-            </div>
+                    <MapContainer
+                        className="outline-none h-full"
+                        zoom={4}
+                        attributionControl={false}
+                        center={[22, 80]}
+                        zoomControl={false}
+                        zoomDelta={0.3}
+                        zoomSnap={0.25}
+                        fullscreenControl={{ position: 'bottomright' }}
+                        fitBounds={true}
+                        maxBoundsViscosity={0.3}
+                    >
+                        <MapEventHandler />
+                        <GeoJSON style={mapStyle} data={data.features} onEachFeature={onEachStates} />
+                        <FixedBound />
+                        {markers ? <MarkerGroups markerData={markers} /> : ""}
+                        <ZoomControl position='bottomright' />
+                        <DescriptionControl position='bottomleft' title="Click/Hover States" />
+                        <ImageExportControl className={enableCustomizer ? "mt-9" : ""} position='topleft' fileName="India" />
+                        {enableCustomizer ? <MapCustomizerControl position='topleft' onPress={(event) => {
+                            setCustomizerActive(true)
+                        }} /> : ""}
+                    </MapContainer>
+                </div>
+            </MapContextProvider>
         </>
     )
     else {

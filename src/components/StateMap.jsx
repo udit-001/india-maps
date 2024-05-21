@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 
 import { MapContainer, GeoJSON, ZoomControl } from 'react-leaflet'
-import { calculateCenter, generateRedShade, POSITION_CLASSES } from '../utils';
+import { calculateCenter } from '../utils';
 import 'leaflet-fullscreen/dist/Leaflet.fullscreen.js';
 import 'leaflet-fullscreen/dist/leaflet.fullscreen.css';
 import Loader from './Loader';
@@ -12,24 +12,45 @@ import ImageExportControl from './controls/ImageExportControl';
 import MapCustomizer from './controls/MapCustomizer';
 import MapCustomizerControl from './controls/MapCustomizerControl';
 import MapEventHandler from './controls/MapEventHandler';
+import { MapContextProvider } from '../contexts/mapContext'
 
 
 
 function StateMap({ id, name }) {
     const [data, setData] = useState(null)
     const [mapCenter, setMapCenter] = useState(null)
-    const [editActive, setEditActive] = useState(false)
-    const [opacity, setOpacity] = useState(100)
+    const [customizerActive, setCustomizerActive] = useState(false)
+    const [fillOpacity, setFillOpacity] = useState(100)
     const [fillColor, setFillColor] = useState("#3498db");
     const [borderColor, setBorderColor] = useState("#000000");
     const [borderWidth, setBorderWidth] = useState(1);
     const [mapStyle, setMapStyle] = useState({
-        "weight": 1,
-        "color": "black",
+        "fillOpacity": fillOpacity / 100,
         "fillColor": "#3498db",
-        "fillOpacity": opacity
+        "weight": 1,
+        "color": "#000000"
     })
     const geojsonRef = useRef(null)
+
+    const updateFillColor = (fillColor) => {
+        setFillColor(fillColor)
+    }
+
+    const updateBorderColor = (borderColor) => {
+        setBorderColor(borderColor)
+    }
+
+    const updateBorderWidth = (borderWidth) => {
+        setBorderWidth(borderWidth)
+    }
+
+    const updateFillOpacity = (fillOpacity) => {
+        setFillOpacity(fillOpacity)
+    }
+
+    const updateCustomizerActive = (value) => {
+        setCustomizerActive(value)
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -43,22 +64,22 @@ function StateMap({ id, name }) {
 
     useEffect(() => {
         setMapStyle({
-            "fillOpacity": opacity,
+            "fillOpacity": fillOpacity / 100,
             "fillColor": fillColor,
             "weight": borderWidth,
             "color": borderColor
         })
     }, [
-        opacity, fillColor,
+        fillOpacity, fillColor,
         borderColor, borderWidth,
-        setFillColor, setOpacity,
+        setFillColor, setFillOpacity,
         setBorderColor, setBorderWidth
     ])
 
     const onEachDistricts = (district, layer) => {
         const districtName = district.properties.district;
         layer.bindTooltip(districtName);
-        layer.setStyle({className: "hover:brightness-125"})
+        layer.setStyle({ className: "hover:brightness-125" })
 
         layer.on({
             mouseover: (event) => {
@@ -78,37 +99,45 @@ function StateMap({ id, name }) {
     return (
         data !== null ? (
             <div className="relative md:aspect-4/3 lg:aspect-video aspect-square overflow-hidden">
-                <MapCustomizer
-                    active={editActive}
-                    updateOpacity={setOpacity}
-                    updateFillColor={setFillColor}
-                    updateBorderWidth={setBorderWidth}
-                    updateBorderColor={setBorderColor}
-                />
-                <MapContainer
-                    className="outline-none md:aspect-4/3 lg:aspect-video aspect-square"
-                    zoom={6}
-                    attributionControl={false}
-                    center={mapCenter}
-                    zoomControl={false}
-                    zoomDelta={0.3}
-                    zoomSnap={0.25}
-                    fullscreenControl={{ position: 'bottomright' }}
-                    fitBounds={true}
-                    maxBoundsViscosity={0.3}
-                >
-                    <MapEventHandler customizerControl={setEditActive} />
-                    <GeoJSON style={mapStyle} data={data.features} onEachFeature={onEachDistricts} ref={geojsonRef} />
-                    <FixedBound />
-                    <CountryButtonControl position="topright" />
-                    <ZoomControl position='bottomright' />
-                    <DescriptionControl position='bottomleft' title="Hover Districts" />
-                    <ImageExportControl className="mt-9" position="topleft" fileName={name} />
-                    <MapCustomizerControl position='topleft' onPress={(event) => {
-                        setEditActive(true)
-                    }} />
-                </MapContainer></div>) : <Loader />
-        )
+                <MapContextProvider value={{
+                    borderColor,
+                    borderWidth,
+                    fillColor,
+                    fillOpacity,
+                    customizerActive,
+                    updateBorderColor,
+                    updateBorderWidth,
+                    updateFillColor,
+                    updateFillOpacity,
+                    updateCustomizerActive
+                }}>
+                    <MapCustomizer />
+                    <MapContainer
+                        className="outline-none md:aspect-4/3 lg:aspect-video aspect-square"
+                        zoom={6}
+                        attributionControl={false}
+                        center={mapCenter}
+                        zoomControl={false}
+                        zoomDelta={0.3}
+                        zoomSnap={0.25}
+                        fullscreenControl={{ position: 'bottomright' }}
+                        fitBounds={true}
+                        maxBoundsViscosity={0.3}
+                    >
+                        <MapEventHandler />
+                        <GeoJSON style={mapStyle} data={data.features} onEachFeature={onEachDistricts} ref={geojsonRef} />
+                        <FixedBound />
+                        <CountryButtonControl position="topright" />
+                        <ZoomControl position='bottomright' />
+                        <DescriptionControl position='bottomleft' title="Hover Districts" />
+                        <ImageExportControl className="mt-9" position="topleft" fileName={name} />
+                        <MapCustomizerControl position='topleft' onPress={(event) => {
+                            setCustomizerActive(true)
+                        }} />
+                    </MapContainer>
+                </MapContextProvider>
+            </div>) : <Loader />
+    )
 }
 
 
