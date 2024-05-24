@@ -80,11 +80,11 @@ function MapCustomizer() {
 
     return (
         <div ref={containerRef} className={`absolute transition-transform ease-in-out duration-300 ${activeClass} w-3/4 sm:w-7/12 opacity-90 bg-neutral-900 h-full`} style={{ zIndex: 9999 }}>
-            <h2 className='m-5 text-left font-bold text-slate-200'>
+            <h2 className='ml-3 mr-2 mt-2 mb-2 md:m-5 text-left font-bold text-slate-200'>
                 Map Customization
             </h2>
-            <div className='hover:bg-neutral-800 pl-4 px-4 pb-5 pt-px'>
-                <h2 className='text-xs font-semibold text-slate-300 text-left mt-4'>Fill —</h2>
+            <div className='hover:bg-neutral-800 pl-4 px-4 pb-2 md:pb-5 pt-px'>
+                <h2 className='text-xs font-semibold text-slate-300 text-left mt-2 md:mt-4'>Fill —</h2>
                 <div className='grid grid-flow-col gap-x-14 text-slate-300 text-xs'>
                     <div className='grid justify-items-start gap-2'>
                         <h1>Color ({fillColor})</h1>
