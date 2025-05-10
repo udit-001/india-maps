@@ -16,9 +16,6 @@ import { MapContextProvider } from '../contexts/mapContext'
 import { compareObjects } from '../utils';
 import { useLocation } from 'react-router';
 
-
-
-
 function StateMap({ id, name }) {
     const [data, setData] = useState(null)
     const [mapCenter, setMapCenter] = useState(null)
@@ -123,51 +120,98 @@ function StateMap({ id, name }) {
         })
     }
 
+    const downloadGeoJSON = () => {
+        const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `${name.toLowerCase()}.geojson`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
+    const downloadTopoJSON = async () => {
+        try {
+            const response = await fetch(`https://cdn.jsdelivr.net/gh/udit-001/india-maps-data@latest/topojson/states/${id}.json`);
+            const topoData = await response.json();
+            const blob = new Blob([JSON.stringify(topoData)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `${name.toLowerCase()}.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } catch (error) {
+            console.error('Error downloading TopoJSON:', error);
+        }
+    };
+
     return (
         data !== null ? (
-            <div className="relative md:aspect-4/3 lg:aspect-video aspect-square overflow-hidden">
-                <MapContextProvider value={{
-                    borderColor,
-                    borderWidth,
-                    fillColor,
-                    fillOpacity,
-                    customizerActive,
-                    updateBorderColor,
-                    updateBorderWidth,
-                    updateFillColor,
-                    updateFillOpacity,
-                    updateCustomizerActive
-                }}>
-                    <MapCustomizer />
-                    <MapContainer
-                        className="outline-none md:aspect-4/3 lg:aspect-video aspect-square"
-                        zoom={6}
-                        attributionControl={false}
-                        center={mapCenter}
-                        zoomControl={false}
-                        zoomDelta={0.3}
-                        zoomSnap={0.25}
-                        fullscreenControl={{ position: 'bottomright' }}
-                        fitBounds={true}
-                        maxBoundsViscosity={0.3}
-                    >
-                        <MapEventHandler />
-                        <GeoJSON style={mapStyle} data={data.features} onEachFeature={onEachDistricts} ref={geojsonRef} />
-                        <FixedBound />
-                        <CountryButtonControl position="topright" />
-                        <ZoomControl position='bottomright' />
-                        <DescriptionControl position='bottomleft' title="Hover Districts" />
-                        <ImageExportControl className="mt-9" position="topleft" fileName={name} />
-                        <MapCustomizerControl position='topleft' onPress={(event) => {
-                            setCustomizerActive(true)
-                        }} />
-                    </MapContainer>
-                </MapContextProvider>
-            </div>) : <Loader />
+            <div className="flex flex-col md:flex-row gap-4">
+                <div className="relative aspect-square md:aspect-4/3 lg:aspect-video overflow-hidden flex-1 min-h-[380px] w-full">
+                    <MapContextProvider value={{
+                        borderColor,
+                        borderWidth,
+                        fillColor,
+                        fillOpacity,
+                        customizerActive,
+                        updateBorderColor,
+                        updateBorderWidth,
+                        updateFillColor,
+                        updateFillOpacity,
+                        updateCustomizerActive
+                    }}>
+                        <MapCustomizer />
+                        <MapContainer
+                            className="outline-none md:aspect-4/3 lg:aspect-video aspect-square"
+                            zoom={6}
+                            attributionControl={false}
+                            center={mapCenter}
+                            zoomControl={false}
+                            zoomDelta={0.3}
+                            zoomSnap={0.25}
+                            fullscreenControl={{ position: 'bottomright' }}
+                            fitBounds={true}
+                            maxBoundsViscosity={0.3}
+                        >
+                            <MapEventHandler />
+                            <GeoJSON style={mapStyle} data={data.features} onEachFeature={onEachDistricts} ref={geojsonRef} />
+                            <FixedBound />
+                            <CountryButtonControl position="topright" />
+                            <ZoomControl position='bottomright' />
+                            <DescriptionControl position='bottomleft' title="Hover Districts" />
+                            <ImageExportControl className="mt-9" position="topleft" fileName={name} />
+                            <MapCustomizerControl position='topleft' onPress={() => {
+                                setCustomizerActive(true)
+                            }} />
+                        </MapContainer>
+                    </MapContextProvider>
+                </div>
+
+                {/* Download Panel - moved to aside */}
+                <div className="bg-white rounded-md shadow-lg p-4 w-full md:w-64 h-fit">
+                    <h3 className="font-semibold text-gray-800 mb-3">Download Map Data</h3>
+                    <div className="space-y-2">
+                        <button
+                            onClick={downloadGeoJSON}
+                            className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition-colors"
+                        >
+                            Download GeoJSON
+                        </button>
+                        <button
+                            onClick={downloadTopoJSON}
+                            className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition-colors"
+                        >
+                            Download TopoJSON
+                        </button>
+                    </div>
+                </div>
+            </div>
+        ) : <Loader />
     )
 }
-
-
-
 
 export default StateMap

@@ -1,18 +1,49 @@
 import React from 'react'
+import Button from '../components/Button'
 
 function Home() {
   return (
-    <>
-    <div className="font-sans text-black min-h-screen bg-white flex flex-col items-center justify-center">
-    <h1 className='text-2xl mb-7'>India Maps</h1>
-    <div className="border rounded overflow-hidden flex">
-        <input type="text" className="outline-none px-4 py-2" placeholder="Search..." />
-        <button className="flex items-center justify-center px-4 border-l">
-        <svg className="h-4 w-4 text-grey-dark" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"/></svg>
-        </button>
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+      <div className="container mx-auto px-4 py-16">
+        <div className="flex flex-col items-center text-center py-20">
+          <h1 className="text-5xl font-bold text-gray-800 mb-6">
+            Explore India&apos;s Geography
+          </h1>
+          <p className="text-xl text-gray-600 max-w-2xl mb-8">
+            Interactive maps of India with detailed state and district information.
+            Customize, explore, and download maps for your needs.
+          </p>
+          <Button path="/map" text="View India Map" />
+        </div>
+
+
+        <div className="py-16">
+          <h2 className="text-3xl font-semibold text-center mb-12 text-gray-800">
+            Key Features
+          </h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <h3 className="text-xl font-semibold mb-3">Interactive Maps</h3>
+              <p className="text-gray-600">
+                Click and hover over states and districts to see detailed information.
+              </p>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <h3 className="text-xl font-semibold mb-3">Customization</h3>
+              <p className="text-gray-600">
+                Change colors, borders, and opacity to create your perfect map.
+              </p>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <h3 className="text-xl font-semibold mb-3">Download Options</h3>
+              <p className="text-gray-600">
+                Export maps in multiple formats including PNG, JPG, SVG, GeoJSON, and TopoJSON.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    </div>
-    </>
   )
 }
 

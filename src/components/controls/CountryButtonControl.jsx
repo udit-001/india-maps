@@ -8,7 +8,7 @@ function CountryButtonControl({ position }) {
     return (
         <div className={positionClass}>
             <div className="leaflet-control legend bg-white rounded outline flex outline-gray-400 outline-2" title="View Country Map">
-                <Link to="/" className='text-sm !text-black p-1'>
+                <Link to="/map" className='text-sm !text-black p-1'>
                     <div>
                         Country Map
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 inline-block ms-1">
