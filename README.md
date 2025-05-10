@@ -16,11 +16,13 @@ A React-based interactive map of India with state and district-level visualizati
    ```bash
    git clone https://github.com/udit-001/india-maps.git
    ```
+
 2. Install dependencies:
    ```bash
    cd india-maps
    npm install
    ```
+
 3. Run the development server:
    ```bash
    npm run dev
