@@ -33,6 +33,10 @@ function CountryMap({ enableCustomizer = false, title = "India", markers = [], f
         "color": "#000000"
     })
 
+    useEffect(() => {
+        document.title = `India Map`;
+    }, [])
+
     const currentRoute = useLocation().pathname.replace("/", "")
 
     const navigate = useNavigate();
