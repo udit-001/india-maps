@@ -1,16 +1,36 @@
-# React + Vite
+# India Maps - Interactive Map Visualization
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React-based interactive map of India with state and district-level visualization, customization options, and data download capabilities.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast 
+- Interactive map of India with state boundaries
+- District-level visualization for each state
+- Customizable map styling (colors, borders, opacity)
+- Download GeoJSON/TopoJSON data
 
+## Getting Started
 
-## TODO
-- [ ] Dark / Light Theme Switching
-- [ ] Randomize button which creates random color for each feature in Map
-- [ ] Allow users to place markers
-- [ ] Add 404 handling for dynamic page
-- [ ] Add marker cluster group support for meetup page (using react-leaflet-markercluster)
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/udit-001/india-maps.git
+   ```
+2. Install dependencies:
+   ```bash
+   cd india-maps
+   npm install
+   ```
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
+4. Open your browser to `http://localhost:3000`
+
+## Dependencies
+- React
+- React Leaflet
+- React Icons
+- React Router
+
+## Data Sources
+GeoJSON/TopoJSON data from [india-maps-data](https://github.com/udit-001/india-maps-data)
