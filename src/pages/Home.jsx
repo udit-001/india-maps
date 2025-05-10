@@ -3,7 +3,7 @@ import Button from '../components/Button'
 
 function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+    <div className="min-h-screen">
       <div className="container mx-auto px-4 py-16">
         <div className="flex flex-col items-center text-center py-20">
           <h1 className="text-5xl font-bold text-gray-800 mb-6">
@@ -15,7 +15,6 @@ function Home() {
           </p>
           <Button path="/map" text="View India Map" />
         </div>
-
 
         <div className="py-16">
           <h2 className="text-3xl font-semibold text-center mb-12 text-gray-800">

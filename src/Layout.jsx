@@ -32,7 +32,7 @@ function Layout() {
       </header>
 
       <main className="flex-grow bg-gray-50">
-        <div className="container-2xl mx-auto px-4 py-6">
+        <div className="container-2xl mx-auto px-4 py-6 bg-gradient-to-b from-blue-50 to-white">
           <Outlet key={location.pathname} />
         </div>
       </main>
