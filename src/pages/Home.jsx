@@ -6,14 +6,13 @@ function Home() {
     <div className="min-h-screen">
       <div className="container mx-auto px-4 py-16">
         <div className="flex flex-col items-center text-center py-20">
-          <h1 className="text-5xl font-bold text-gray-800 mb-6">
-            Explore India&apos;s Geography
+          <h1 className="text-4xl lg:text-5xl font-bold text-gray-800 mb-6">
+            India&apos;s Maps, Structured for You
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mb-8">
-            Interactive maps of India with detailed state and district information.
-            Customize, explore, and download maps for your needs.
+            Dive into interactive maps showcasing every state and district of India. Customize, analyze, and export maps tailored to your needs.
           </p>
-          <Button path="/map" text="View India Map" />
+          <Button path="/map" text="Start Exploring Now" />
         </div>
 
         <div className="py-16">
