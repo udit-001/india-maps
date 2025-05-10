@@ -1,4 +1,5 @@
 # India Maps - Interactive Map Visualization
+[![Netlify Status](https://api.netlify.com/api/v1/badges/bc9c52a0-744c-4432-bcac-13552edf00b6/deploy-status)](https://app.netlify.com/sites/indiamaps/deploys)
 
 A React-based interactive map of India with state and district-level visualization, customization options, and data download capabilities.
 
